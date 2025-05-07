@@ -17,7 +17,87 @@ dataFrameUsuarios['direccion'] = dataFrameUsuarios['direccion'].fillna("")
 dataFrameUsuarios['fecha_nacimiento'] = pd.to_datetime(dataFrameUsuarios['fecha_nacimiento'], errors='coerce')
 
 # Filtros y consultas
+# 1. Solo estudiantes
+soloEstudiantes = dataFrameUsuarios.query('tipo_usuario == "estudiante"')
+print(soloEstudiantes)
 
+# 2. Solo profesores
+soloProfesores = dataFrameUsuarios.query('tipo_usuario == "profesor"')
+print(soloProfesores)
+
+# 3. Todos excepto estudiantes
+sinEstudiantes = dataFrameUsuarios.query('tipo_usuario != "estudiante"')
+print(sinEstudiantes)
+
+# 4. Filtrar por especialidad (ejemplo: "Matemáticas")
+especialidadFiltro = dataFrameUsuarios.query('especialidad == "Matemáticas"')
+print(especialidadFiltro)
+
+# 5. Excluir una especialidad (ejemplo: "Informática")
+sinEspecialidadFiltro = dataFrameUsuarios.query('especialidad != "Informática"')
+print(sinEspecialidadFiltro)
+
+# 6. Excluir administrativos
+sinAdministrativos = dataFrameUsuarios.query('tipo_usuario != "administrativo"')
+print(sinAdministrativos)
+
+# 7. Direcciones en Medellín
+medellinDirecciones = dataFrameUsuarios.query('direccion.str.contains("Medellín")', engine="python")
+print(medellinDirecciones)
+
+# 8. Direcciones terminadas en "Sur"
+direccionesSur = dataFrameUsuarios.query('direccion.str.endswith("Sur")', engine="python")
+print(direccionesSur)
+
+# 9. Direcciones que inician con "Calle"
+direccionesCalle = dataFrameUsuarios.query('direccion.str.startswith("Calle")', engine="python")
+print(direccionesCalle)
+
+# 10. Especialidades que contienen la palabra "datos"
+especialidadDatos = dataFrameUsuarios.query('especialidad.str.contains("datos", case=False, na=False)', engine="python")
+print(especialidadDatos)
+
+# 11. Instructores en Itagüí
+instructoresItagui = dataFrameUsuarios.query('tipo_usuario == "instructor" and direccion.str.contains("Itagüí")', engine="python")
+print(instructoresItagui)
+
+# 12. Nacidos después del 2000
+nacidos2000 = dataFrameUsuarios.query('fecha_nacimiento > "2000-01-01"')
+print(nacidos2000)
+
+# 13. Nacidos en los 90
+nacidos90 = dataFrameUsuarios.query('fecha_nacimiento >= "1990-01-01" and fecha_nacimiento < "2000-01-01"')
+print(nacidos90)
+
+# 14. Direcciones en Envigado
+envigadoDirecciones = dataFrameUsuarios.query('direccion.str.contains("Envigado")', engine="python")
+print(envigadoDirecciones)
+
+# 15. Especialidades que empiezan por "I"
+especialidadI = dataFrameUsuarios.query('especialidad.str.startswith("I")', engine="python")
+print(especialidadI)
+
+# 16. Usuarios sin dirección
+sinDireccion = dataFrameUsuarios.query('direccion == ""')
+print(sinDireccion)
+
+# 17. Usuarios sin especialidad
+sinEspecialidad = dataFrameUsuarios.query('especialidad == ""')
+print(sinEspecialidad)
+
+# 18. Profesores que viven en Sabaneta
+profesoresSabaneta = dataFrameUsuarios.query('tipo_usuario == "profesor" and direccion.str.contains("Sabaneta")', engine="python")
+print(profesoresSabaneta)
+
+# 19. Aprendices que viven en Bello
+aprendicesBello = dataFrameUsuarios.query('tipo_usuario == "aprendiz" and direccion.str.contains("Bello")', engine="python")
+print(aprendicesBello)
+
+# 20. Nacidos en el nuevo milenio (2000 en adelante)
+nacidosNuevoMilenio = dataFrameUsuarios.query('fecha_nacimiento >= "2000-01-01"')
+print(nacidosNuevoMilenio)
+
+# Agrupaciones y cálculos
 # 1. Total por tipo de usuario
 totalPorTipo = dataFrameUsuarios['tipo_usuario'].value_counts()
 print(totalPorTipo)
